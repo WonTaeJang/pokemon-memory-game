@@ -1,11 +1,12 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import HomePage from '@pages/home-page/HomePage'
 import GamePage from '@pages/game-page/GamePage'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/game" replace />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/game" element={<GamePage />} />
       </Routes>
     </BrowserRouter>

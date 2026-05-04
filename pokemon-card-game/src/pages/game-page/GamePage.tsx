@@ -1,25 +1,43 @@
-// 게임의 유일한 페이지 컴포넌트
-//
-// 개발 항목:
-// - useGameLogic, usePokemon 훅을 연결하는 최상위 컴포넌트
-// - 게임 진행 중: GameInfo + Board 렌더링
-// - 스텝 클리어 시: 다음 스텝으로 전환
-// - 게임 클리어 / 게임 오버 시: 결과 화면 렌더링
-//   - 결과 화면: 최종 점수, 스텝별 남은 횟수, 재시작 버튼
-
-import { useEffect } from "react"
-import { fetchRandomPokemons } from '@api/pokemon'
+import { useEffect, useState } from "react"
+import { usePokemon } from "@/hooks/usePokemon"
+import { useGameLogic } from "@/hooks/useGameLogic"
+import Board from "@components/board/Board"
+import { STEP_CONFIG } from '@constants/gameConfig'
+import { useNavigate } from 'react-router-dom'
 
 function GamePage() {
+  const { stepCards, isLoading, error } = usePokemon()
+  const { 
+    state, 
+    handleCardClick, 
+    handleReset, 
+    handleSkipStage, 
+    handleActiveHint 
+  } = useGameLogic(stepCards)
+  const navigate = useNavigate()
+  const currentStage = STEP_CONFIG[state.currentStep]
+
   useEffect(() => {
-    fetchRandomPokemons(1).then((result) => {
-      console.log(result)
-    })
-  }, [])
+    if(!isLoading) {
+      console.log('state: ', state)
+    }
+    
+  }, [isLoading, state])
 
   return (
     <>
-      <h1>hello world</h1>
+      {
+        state.status === 'playing' ?
+        <Board 
+          cards={state.cards}
+          state={state}
+          stage={currentStage}
+          onClickCard={handleCardClick}
+          handleSkipStage={handleSkipStage}
+          onHome={() => navigate('/')}
+          handleActiveHint={handleActiveHint}
+        /> : null
+      }
     </>
   )
 }
