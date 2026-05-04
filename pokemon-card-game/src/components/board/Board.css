@@ -1,8 +1,0 @@
-/* 카드 그리드 레이아웃 스타일
- *
- * 개발 항목:
- * - .board: display: grid, gap 설정
- * - 스텝별 grid-template-columns 동적 적용
- *   step1: repeat(2, 1fr) / step2: repeat(4, 1fr)
- *   step3: repeat(5, 1fr) / step4: repeat(6, 1fr)
- */
