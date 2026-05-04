@@ -1,7 +1,45 @@
-// 프로젝트 전체에서 사용하는 TypeScript 타입 정의
-//
-// 개발 항목:
-// - CardType: { id, pokemonId, imageUrl, isFlipped, isMatched }
-// - StepConfig: { step, rows, cols, pokemonCount, maxFlips }
-// - GameStatus: 'playing' | 'clear' | 'gameover'
-// - GameState: { currentStep, remainingFlips, totalScore, status }
+export interface PokemonData {
+  id: number
+  name: string
+  imageUrl: string
+}
+
+export interface PokemonName {
+  language: { name: string; url: string }
+  name: string
+}
+
+export interface CardType {
+  id: string
+  name: string
+  pokemonId: number
+  imageUrl: string
+  isFlipped: boolean
+  isMatched: boolean
+}
+
+export interface StepConfig {
+  step: number
+  id: number
+  rows: number
+  cols: number
+  pokemonCount: number
+  maxFlips: number
+  label: string
+  ballType: string
+  ballName: string
+  ballColor: string
+  difficulty: string
+}
+
+export type GameStatus = 'playing' | 'clear' | 'gameover' | 'ready'
+
+export interface GameState {
+  currentStep: number
+  status: GameStatus
+  remainingFlips: number
+  totalScore: number
+  cards: CardType[]
+  flippedCards: CardType[]
+  isChecking: boolean
+}

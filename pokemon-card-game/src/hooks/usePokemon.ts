@@ -1,8 +1,44 @@
-// PokeAPI에서 포켓몬 데이터를 가져와 카드 배열을 생성하는 커스텀 훅
-//
-// 개발 항목:
-// - 게임 시작 시 36마리 랜덤 포켓몬을 한 번에 fetch
-// - 스텝별 포켓몬 분배: step1(2), step2(6), step3(10), step4(18)
-// - 각 포켓몬을 2장씩 복제해 카드 쌍 생성
-// - shuffle 유틸로 카드 순서 섞기
-// - 상태: pokemonCards (스텝별 카드 배열), isLoading, error
+import type { PokemonData, CardType } from '@/types'
+import { useState, useEffect } from 'react'
+import { fetchRandomPokemons } from '@api/pokemon'
+import { shuffle } from '@utils/shuffle'
+
+const toCards = (pokemon: PokemonData): CardType[] => [
+  { id: `${pokemon.id}-a`, name: pokemon.name, pokemonId: pokemon.id, imageUrl: pokemon.imageUrl, isFlipped: false, isMatched: false },
+  { id: `${pokemon.id}-b`, name: pokemon.name, pokemonId: pokemon.id, imageUrl: pokemon.imageUrl, isFlipped: false, isMatched: false },
+]
+
+export function usePokemon() {
+  const [stepCards, setStepCards] = useState<CardType[][]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    const STEP_COUNTS = [2, 6, 10, 18]
+    let cursor = 0
+
+    const initLoad = async () => {
+      try {
+        setIsLoading(true)
+        const data = await fetchRandomPokemons(36)
+
+        const steps = STEP_COUNTS.map(count => {
+          const slice = data.slice(cursor, cursor + count)
+          cursor += count
+          return slice
+        })
+
+        const cards = steps.map(stepPokemons => shuffle(stepPokemons.flatMap(toCards)))
+        setStepCards(cards)
+      } catch {
+        setError(new Error('포켓몬 데이터를 불러오지 못했습니다.'))
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    initLoad()
+  }, [])
+
+  return { stepCards, isLoading, error }
+}

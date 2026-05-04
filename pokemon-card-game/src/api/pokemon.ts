@@ -1,17 +1,8 @@
+import type { PokemonData, PokemonName } from '@/types/index'
+
 const BASE_URL = 'https://pokeapi.co/api/v2'
 const POKEMON_MAX_ID = 1025 // 모든 포켓몬
 const IMG_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'
-
-interface PokemonData {
-  id: number
-  name: string
-  imageUrl: string
-}
-
-interface PokemonName {
-  language: { name: string; url: string }
-  name: string
-}
 
 function getRandomUniqueIds(count: number, max: number): number[] {
   const ids = new Set<number>()

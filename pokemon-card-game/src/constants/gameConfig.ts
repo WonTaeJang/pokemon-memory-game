@@ -1,10 +1,59 @@
-// 게임 스텝별 설정값 상수
-//
-// 개발 항목:
-// - STEP_CONFIG 배열: 각 스텝의 rows, cols, pokemonCount, maxFlips 정의
-//   step1: { rows: 2, cols: 2, pokemonCount: 2,  maxFlips: 10 }
-//   step2: { rows: 3, cols: 4, pokemonCount: 6,  maxFlips: 10 }
-//   step3: { rows: 4, cols: 5, pokemonCount: 10, maxFlips: 10 }
-//   step4: { rows: 6, cols: 6, pokemonCount: 18, maxFlips: 10 }
-// - TOTAL_STEPS: 4
-// - FLIP_DELAY_MS: 1000 (매칭 실패 시 카드 뒤집힘 대기 시간)
+import type { StepConfig } from '@/types'
+
+export const STEP_CONFIG: StepConfig[] = [
+  { 
+    step: 1, 
+    rows: 2, 
+    cols: 2, 
+    pokemonCount: 2,  
+    maxFlips: 4,
+    id: 1,
+    label: "STAGE 1",
+    ballType: "pokeball",
+    ballName: "몬스터볼",
+    ballColor: "#E53935",
+    difficulty: "EASY",
+  },
+  { 
+    step: 2, 
+    rows: 3, 
+    cols: 4, 
+    pokemonCount: 6,  
+    maxFlips: 10,
+    id: 2,
+    label: "STAGE 2",
+    ballType: "superball",
+    ballName: "슈퍼볼",
+    ballColor: "#1565C0",
+    difficulty: "NORMAL",
+  },
+  { 
+    step: 3, 
+    rows: 4, 
+    cols: 5, 
+    pokemonCount: 10, 
+    maxFlips: 10,
+    id: 3,
+    label: "STAGE 3",
+    ballType: "hyperball",
+    ballName: "하이퍼볼",
+    ballColor: "#F9A825",
+    difficulty: "HARD",
+  },
+  { 
+    step: 4, 
+    rows: 6, 
+    cols: 6, 
+    pokemonCount: 18, 
+    maxFlips: 20,
+    id: 4,
+    label: "STAGE 4",
+    ballType: "masterball",
+    ballName: "마스터볼",
+    ballColor: "#6A1B9A",
+    difficulty: "MASTER",
+  },
+]
+
+export const TOTAL_STEPS = 4
+export const FLIP_DELAY_MS = 1000
