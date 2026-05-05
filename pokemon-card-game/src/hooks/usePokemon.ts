@@ -2,6 +2,7 @@ import type { PokemonData, CardType } from '@/types'
 import { useState, useEffect } from 'react'
 import { fetchRandomPokemons } from '@api/pokemon'
 import { shuffle } from '@utils/shuffle'
+import { STEP_CONFIG } from '@/constants/gameConfig'
 
 const toCards = (pokemon: PokemonData): CardType[] => [
   { id: `${pokemon.id}-a`, name: pokemon.name, pokemonId: pokemon.id, imageUrl: pokemon.imageUrl, isFlipped: false, isMatched: false },
@@ -14,7 +15,8 @@ export function usePokemon() {
   const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
-    const STEP_COUNTS = [2, 6, 10, 18]
+    // const STEP_COUNTS = [2, 6, 10, 18]
+    const STEP_COUNTS = STEP_CONFIG.map(el => el.pokemonCount)
     let cursor = 0
 
     const initLoad = async () => {
