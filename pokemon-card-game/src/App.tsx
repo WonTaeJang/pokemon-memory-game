@@ -4,7 +4,7 @@ import GamePage from '@pages/game-page/GamePage'
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/pokemon-memory-game">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/game" element={<GamePage />} />
