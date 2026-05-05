@@ -9,7 +9,7 @@ import { STEP_CONFIG } from '@constants/gameConfig'
 import { getBestScore, setBestScore } from '@/utils/storage'
 
 function GamePage() {
-  const { stepCards, isLoading, error } = usePokemon()
+  const { stepCards, isLoading } = usePokemon()
   const { 
     state, 
     handleCardClick, 

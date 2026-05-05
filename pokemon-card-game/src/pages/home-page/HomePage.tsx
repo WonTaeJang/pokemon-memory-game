@@ -6,7 +6,7 @@ import { getBestScore } from '@/utils/storage'
 
 function HomePage() {
   const navigate = useNavigate()
-  const [hovered, setHovered] = useState(null)
+  const [hovered, setHovered] = useState<number | null>(null)
   const bestScore = getBestScore()
 
   return (
