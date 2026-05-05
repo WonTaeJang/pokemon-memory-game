@@ -18,6 +18,7 @@ function GamePage() {
   } = useGameLogic(stepCards)
   const navigate = useNavigate()
   const currentStage = STEP_CONFIG[state.currentStep]
+
   useEffect(() => {
     if (state.status === 'clear' || state.status === 'gameover') {
       if (state.totalScore > getBestScore()) {
@@ -36,19 +37,17 @@ function GamePage() {
     
   }, [isLoading, state])
 
-  // timer
+  // timer tick
   useEffect(() => {
-    let id = undefined
-    if(state.status === 'playing') {
-      id = setInterval(() => setTimer(t => t + 1), 1000)
-    }
-
-    /*
-      useEffect의 클린업 함수입니다.
-      컴포넌트가 언마운트되거나 useEffect가 재실행되기 직전에 자동으로 호출됩니다.
-    */ 
+    if (state.status !== 'playing') return
+    const id = setInterval(() => setTimer(t => t + 1), 1000)
     return () => clearInterval(id)
-  }, [state])
+  }, [state.status])
+
+  const onClickRetry = () => {
+    handleReset()
+    setTimer(0)
+  }
 
   if (state.status === 'clear' || state.status === 'gameover') {
     const storedBest = getBestScore()
@@ -61,7 +60,7 @@ function GamePage() {
           status={state.status}
           stageScores={state.stageScores}
           onHome={() => navigate('/')}
-          onRetry={handleReset}
+          onRetry={onClickRetry}
         />
       </div>
     )
