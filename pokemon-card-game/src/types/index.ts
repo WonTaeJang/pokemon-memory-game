@@ -39,6 +39,7 @@ export interface GameState {
   status: GameStatus
   remainingFlips: number
   totalScore: number
+  currentStageScore: number
   stageScores: number[]
   cards: CardType[]
   flippedCards: CardType[]

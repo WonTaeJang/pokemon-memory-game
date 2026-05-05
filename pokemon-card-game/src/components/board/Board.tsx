@@ -1,7 +1,7 @@
 import type { CardType, GameState, StepConfig } from '@/types'
 import GameInfo from '../game-info/GameInfo'
 import Card from '../card/Card'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { STEP_CONFIG } from '@/constants/gameConfig'
 
 
@@ -80,7 +80,7 @@ function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, hand
         <div style={boardStyles.progressWrap}>
           <div style={boardStyles.progressLabel}>
             <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: 7, color: 'rgba(255,255,255,0.4)' }}>
-              매칭 진행도
+              진행도
             </span>
             <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: 7, color: '#FFD700' }}>
               {matchedCount}/{stage.pokemonCount}

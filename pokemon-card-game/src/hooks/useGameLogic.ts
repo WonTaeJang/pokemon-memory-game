@@ -8,7 +8,8 @@ type Action =
   | { type: 'MATCH_FAIL' }
   | { type: 'SET_CHECKING', value: boolean }
   | { type: 'NEXT_STEP', cards: CardType[] }
-  | { type: 'GAME_CLEAR', scoreGain: number }
+  | { type: 'GAME_CLEAR' }
+  | { type: 'GAME_OVER' }
   | { type: 'RESET', cards: CardType[] }
   | { type: 'GAME_START' }
   | { type: 'GAME_HINT', cards: CardType[] }
@@ -19,6 +20,7 @@ function getInitialState(): GameState {
     status: 'ready',
     remainingFlips: STEP_CONFIG[0].maxFlips,
     totalScore: 0,
+    currentStageScore: 0,
     cards: [],
     flippedCards: [],
     stageScores: [],
@@ -46,6 +48,8 @@ function reducer(state: GameState, action: Action): GameState {
           c.id === first.id || c.id === second.id ? { ...c, isMatched: true } : c
         ),
         flippedCards: [],
+        totalScore: state.totalScore + 1,
+        currentStageScore: state.currentStageScore + 1,
       }
     }
     case 'MATCH_FAIL': {
@@ -58,13 +62,14 @@ function reducer(state: GameState, action: Action): GameState {
         ),
         flippedCards: [],
         remainingFlips: newRemainingFlips,
-        status: newRemainingFlips === 0 ? 'gameover' : state.status,
         isChecking: false,
       }
     }
+    // 카드 뒤집기 매칭 실패시 발생
     case 'SET_CHECKING': {
       return { ...state, isChecking: action.value }
     }
+    // 스테이지 이동 
     case 'NEXT_STEP': {
       const nextStep = state.currentStep + 1
       return {
@@ -73,21 +78,31 @@ function reducer(state: GameState, action: Action): GameState {
         status: 'playing',
         remainingFlips: STEP_CONFIG[nextStep].maxFlips,
         totalScore: state.totalScore + state.remainingFlips,
-        stageScores: [...state.stageScores, state.remainingFlips],
+        currentStageScore: 0,
+        stageScores: [...state.stageScores, state.currentStageScore + state.remainingFlips],
         cards: action.cards,
         flippedCards: [],
         isChecking: false,
       }
     }
+    // 게임 클리어
     case 'GAME_CLEAR': {
       return {
         ...state,
         status: 'clear',
-        totalScore: state.totalScore + action.scoreGain,
-        stageScores: [...state.stageScores, action.scoreGain],
+        totalScore: state.totalScore + state.remainingFlips,
+        currentStageScore: 0,
+        stageScores: [...state.stageScores, state.currentStageScore + state.remainingFlips],
         cards: [],
         flippedCards: [],
         isChecking: false,
+      }
+    }
+    case 'GAME_OVER': {
+      return {
+        ...state,
+        status: 'gameover',
+        stageScores: [...state.stageScores, state.currentStageScore],
       }
     }
     case 'RESET': {
@@ -102,6 +117,7 @@ function reducer(state: GameState, action: Action): GameState {
         status: 'playing'
       }
     }
+    // 게임 힌트
     case 'GAME_HINT': {
       return {
         ...state,
@@ -153,7 +169,7 @@ export function useGameLogic(stepCards: CardType[][]) {
 
         if (willBeLastMatch) {
           if (state.currentStep >= TOTAL_STEPS - 1) {
-            dispatch({ type: 'GAME_CLEAR', scoreGain: state.remainingFlips })
+            dispatch({ type: 'GAME_CLEAR' })
           } else {
             dispatch({ type: 'MATCH_SUCCESS' })
             setTimeout(() => {
@@ -165,8 +181,17 @@ export function useGameLogic(stepCards: CardType[][]) {
         }
       } else {
         dispatch({ type: 'SET_CHECKING', value: true })
+
         setTimeout(() => {
-          dispatch({ type: 'MATCH_FAIL' })
+          // gameover check 
+          const newRemainingFlips = state.remainingFlips - 1
+          
+          if(newRemainingFlips === 0) {
+            dispatch({ type: 'GAME_OVER' })
+          } else {
+            dispatch({ type: 'MATCH_FAIL' })
+          }
+
         }, FLIP_DELAY_MS)
       }
     }
@@ -175,7 +200,7 @@ export function useGameLogic(stepCards: CardType[][]) {
   // 건너뛰기 dev 용
   const handleSkipStage = useCallback(() => {
     if (state.currentStep >= TOTAL_STEPS - 1) {
-      dispatch({ type: 'GAME_CLEAR', scoreGain: state.remainingFlips })
+      dispatch({ type: 'GAME_CLEAR' })
     } else {
       setTimeout(() => {
         dispatch({ type: 'NEXT_STEP', cards: stepCards[state.currentStep + 1] })
