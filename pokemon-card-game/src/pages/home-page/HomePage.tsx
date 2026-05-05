@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { STEP_CONFIG } from '@constants/gameConfig'
 import PokeballBack from '@/components/pokeball/PokeballBack'
+import { getBestScore } from '@/utils/storage'
 
 function HomePage() {
   const navigate = useNavigate()
   const [hovered, setHovered] = useState(null)
-  const [bestScore, setBestScore] = useState(0)
+  const bestScore = getBestScore()
 
   return (
       <div style={homeStyles.container}>

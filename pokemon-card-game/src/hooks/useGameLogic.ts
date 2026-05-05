@@ -9,7 +9,7 @@ type Action =
   | { type: 'SET_CHECKING', value: boolean }
   | { type: 'NEXT_STEP', cards: CardType[] }
   | { type: 'GAME_CLEAR', scoreGain: number }
-  | { type: 'RESET', cards: CardType[], maxFlips: number }
+  | { type: 'RESET', cards: CardType[] }
   | { type: 'GAME_START' }
   | { type: 'GAME_HINT', cards: CardType[] }
 
@@ -21,6 +21,7 @@ function getInitialState(): GameState {
     totalScore: 0,
     cards: [],
     flippedCards: [],
+    stageScores: [],
     isChecking: false,
   }
 }
@@ -72,6 +73,7 @@ function reducer(state: GameState, action: Action): GameState {
         status: 'playing',
         remainingFlips: STEP_CONFIG[nextStep].maxFlips,
         totalScore: state.totalScore + state.remainingFlips,
+        stageScores: [...state.stageScores, state.remainingFlips],
         cards: action.cards,
         flippedCards: [],
         isChecking: false,
@@ -82,6 +84,7 @@ function reducer(state: GameState, action: Action): GameState {
         ...state,
         status: 'clear',
         totalScore: state.totalScore + action.scoreGain,
+        stageScores: [...state.stageScores, action.scoreGain],
         cards: [],
         flippedCards: [],
         isChecking: false,
@@ -89,13 +92,8 @@ function reducer(state: GameState, action: Action): GameState {
     }
     case 'RESET': {
       return {
-        currentStep: 0,
-        status: 'ready',
-        remainingFlips: action.maxFlips,
-        totalScore: 0,
+        ...getInitialState(),
         cards: action.cards,
-        flippedCards: [],
-        isChecking: false,
       }
     }
     case 'GAME_START': {
@@ -124,7 +122,7 @@ export function useGameLogic(stepCards: CardType[][]) {
   useEffect(() => {
     if (!initialized.current && stepCards.length > 0) {
       initialized.current = true
-      dispatch({ type: 'RESET', cards: stepCards[0], maxFlips: STEP_CONFIG[0].maxFlips })
+      dispatch({ type: 'RESET', cards: stepCards[0] })
     }
   }, [stepCards])
 
@@ -187,9 +185,6 @@ export function useGameLogic(stepCards: CardType[][]) {
 
   // handleActiveHint
   const handleActiveHint = useCallback((flag: boolean, hintIds: Array<string>) => {
-    console.log(flag, hintIds)
-
-    // console.log(state, stepCards)
     let hintCards = state.cards
 
     if(flag) {
@@ -214,7 +209,7 @@ export function useGameLogic(stepCards: CardType[][]) {
 
   const handleReset = useCallback(() => {
     initialized.current = false
-    dispatch({ type: 'RESET', cards: stepCards[0], maxFlips: STEP_CONFIG[0].maxFlips })
+    dispatch({ type: 'RESET', cards: stepCards[0] })
     initialized.current = true
   }, [stepCards])
 

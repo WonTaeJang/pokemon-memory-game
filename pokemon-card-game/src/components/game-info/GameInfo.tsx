@@ -16,10 +16,10 @@ interface Props {
 // ===== TOP BAR =====
 const GameInfo = ({ stage, flipsLeft, timer, totalScore, onHome, hintsLeft, onHint, hintActive, onSkipStage, isLastStage }: Props) => {
   const formatTime = (s: number) => {
-    const m = Math.floor(s / 60);
-    const sec = s % 60;
-    return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
-  };
+    const m = Math.floor(s / 60)
+    const sec = s % 60
+    return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`
+  }
 
   return (
     <div style={barStyles.bar}>

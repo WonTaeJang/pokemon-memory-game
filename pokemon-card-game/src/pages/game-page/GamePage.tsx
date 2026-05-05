@@ -2,8 +2,10 @@ import { useEffect, useState } from "react"
 import { usePokemon } from "@/hooks/usePokemon"
 import { useGameLogic } from "@/hooks/useGameLogic"
 import Board from "@components/board/Board"
+import FinalResultOverlay from "@components/overlay/FinalResultOverlay"
 import { STEP_CONFIG } from '@constants/gameConfig'
 import { useNavigate } from 'react-router-dom'
+import { getBestScore, setBestScore } from '@/utils/storage'
 
 function GamePage() {
   const { stepCards, isLoading, error } = usePokemon()
@@ -16,6 +18,16 @@ function GamePage() {
   } = useGameLogic(stepCards)
   const navigate = useNavigate()
   const currentStage = STEP_CONFIG[state.currentStep]
+  useEffect(() => {
+    if (state.status === 'clear' || state.status === 'gameover') {
+      if (state.totalScore > getBestScore()) {
+        setBestScore(state.totalScore)
+      }
+    }
+  }, [state.status, state.totalScore])
+
+  // timer
+  const [time, setTimer] = useState(0)
 
   useEffect(() => {
     if(!isLoading) {
@@ -23,6 +35,37 @@ function GamePage() {
     }
     
   }, [isLoading, state])
+
+  // timer
+  useEffect(() => {
+    let id = undefined
+    if(state.status === 'playing') {
+      id = setInterval(() => setTimer(t => t + 1), 1000)
+    }
+
+    /*
+      useEffect의 클린업 함수입니다.
+      컴포넌트가 언마운트되거나 useEffect가 재실행되기 직전에 자동으로 호출됩니다.
+    */ 
+    return () => clearInterval(id)
+  }, [state])
+
+  if (state.status === 'clear' || state.status === 'gameover') {
+    const storedBest = getBestScore()
+    const bestScore = Math.max(storedBest, state.totalScore)
+    return (
+      <div style={{ minHeight: '100dvh', background: 'linear-gradient(160deg, #1a0000 0%, #0d0d1a 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <FinalResultOverlay
+          totalScore={state.totalScore}
+          bestScore={bestScore}
+          status={state.status}
+          stageScores={state.stageScores}
+          onHome={() => navigate('/')}
+          onRetry={handleReset}
+        />
+      </div>
+    )
+  }
 
   return (
     <>
@@ -36,6 +79,7 @@ function GamePage() {
           handleSkipStage={handleSkipStage}
           onHome={() => navigate('/')}
           handleActiveHint={handleActiveHint}
+          time={time}
         /> : null
       }
     </>

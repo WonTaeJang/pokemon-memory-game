@@ -13,28 +13,17 @@ interface Props {
   onHome: () => void,
   handleSkipStage: () => void,
   handleActiveHint: (flag: boolean, hintIds: Array<string>) => void,
+  time: number,
 }
 
-function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, handleActiveHint }: Props) {
-  const [time, setTimer] = useState(0)
-  const [overlay, setOverlay] = useState(null) // 'clear' | 'over'
+function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, handleActiveHint, time }: Props) {
   const [hintsLeft, setHintsLeft] = useState(3)
   const [hintActive, setHintActive] = useState(false)
 
   const matchedCount = state.cards.filter(card => card.isMatched).length / 2
 
-  // timer
-  useEffect(() => {
-    if(overlay) {
-      return 
-    }
-
-    const id = setInterval(() => setTimer(t => t + 1), 1000)
-    return () => clearInterval(id)
-  }, [overlay])
-
   const handleHint = () => {
-    if (hintsLeft <= 0 || hintActive || overlay) return
+    if (hintsLeft <= 0 || hintActive) return
     setHintsLeft(h => h - 1);
     setHintActive(true)
 
