@@ -42,9 +42,9 @@ export const STEP_CONFIG: StepConfig[] = [
   },
   { 
     step: 4, 
-    rows: 8, 
-    cols: 4, 
-    pokemonCount: 16, 
+    rows: 6, 
+    cols: 5, 
+    pokemonCount: 15, 
     maxFlips: 40,
     id: 4,
     label: "STAGE 4",

@@ -85,14 +85,14 @@ const GameInfo = ({ stage, flipsLeft, timer, totalScore, onHome, hintsLeft, onHi
       </button>
 
       {/* Skip button (test only) */}
-      <button
+      {/* <button
         style={barStyles.skipBtn}
         onClick={onSkipStage}
         title={isLastStage ? '결과 보기' : '다음 스테이지'}
       >
         <span style={barStyles.skipIcon}>{isLastStage ? '🏁' : '⏭'}</span>
         <span style={barStyles.skipLabel}>{isLastStage ? '완료' : 'SKIP'}</span>
-      </button>
+      </button> */}
     </div>
   )
 }
