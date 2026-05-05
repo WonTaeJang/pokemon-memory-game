@@ -1,4 +1,4 @@
-import { useReducer, useCallback, useRef, useEffect } from 'react'
+import { useReducer, useCallback, useRef, useEffect, useState } from 'react'
 import type { CardType, GameState } from '@/types'
 import { STEP_CONFIG, TOTAL_STEPS, FLIP_DELAY_MS } from '@/constants/gameConfig'
 
@@ -132,6 +132,7 @@ function reducer(state: GameState, action: Action): GameState {
 
 export function useGameLogic(stepCards: CardType[][]) {
   const [state, dispatch] = useReducer(reducer, undefined, getInitialState)
+  const [matchedCard, setMatchedCard] = useState<CardType | null>(null)
   const initialized = useRef(false)
 
   // stepCards가 로드되면 초기화
@@ -152,7 +153,9 @@ export function useGameLogic(stepCards: CardType[][]) {
 
   const handleCardClick = useCallback((cardId: string) => {
     if (state.isChecking || state.status !== 'playing') return
+    
     const card = state.cards.find(c => c.id === cardId)
+
     if (!card || card.isFlipped || card.isMatched) return
     if (state.flippedCards.length >= 2) return
 
@@ -167,14 +170,19 @@ export function useGameLogic(stepCards: CardType[][]) {
         const willBeLastMatch =
           state.cards.filter(c => !c.isMatched && c.id !== first.id && c.id !== second.id).length === 0
 
+        // snackbar
+        setMatchedCard(first)
+
         if (willBeLastMatch) {
           if (state.currentStep >= TOTAL_STEPS - 1) {
-            dispatch({ type: 'GAME_CLEAR' })
+            setTimeout(() => {
+              dispatch({ type: 'GAME_CLEAR' })
+            }, 1700)
           } else {
             dispatch({ type: 'MATCH_SUCCESS' })
             setTimeout(() => {
               dispatch({ type: 'NEXT_STEP', cards: stepCards[state.currentStep + 1] })
-            }, 600)
+            }, 1700)
           }
         } else {
           dispatch({ type: 'MATCH_SUCCESS' })
@@ -204,7 +212,7 @@ export function useGameLogic(stepCards: CardType[][]) {
     } else {
       setTimeout(() => {
         dispatch({ type: 'NEXT_STEP', cards: stepCards[state.currentStep + 1] })
-      }, 600)
+      }, 200)
     }
   }, [state, stepCards])
 
@@ -238,5 +246,13 @@ export function useGameLogic(stepCards: CardType[][]) {
     initialized.current = true
   }, [stepCards])
 
-  return { state, handleCardClick, handleReset, handleSkipStage, handleActiveHint }
+  return { 
+    state, 
+    handleCardClick, 
+    handleReset, 
+    handleSkipStage, 
+    handleActiveHint,
+    matchedCard,
+    clearMatchedCard:() => setMatchedCard(null)
+  }
 }

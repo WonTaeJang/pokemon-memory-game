@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
-import { usePokemon } from "@/hooks/usePokemon"
-import { useGameLogic } from "@/hooks/useGameLogic"
 import Board from "@components/board/Board"
 import FinalResultOverlay from "@components/overlay/FinalResultOverlay"
-import { STEP_CONFIG } from '@constants/gameConfig'
+import MatchSnackbar from "@components/snackbar/MatchSnackbar"
+import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
+import { usePokemon } from "@/hooks/usePokemon"
+import { useGameLogic } from "@/hooks/useGameLogic"
+import { STEP_CONFIG } from '@constants/gameConfig'
 import { getBestScore, setBestScore } from '@/utils/storage'
 
 function GamePage() {
@@ -14,7 +15,9 @@ function GamePage() {
     handleCardClick, 
     handleReset, 
     handleSkipStage, 
-    handleActiveHint 
+    handleActiveHint,
+    matchedCard, 
+    clearMatchedCard,
   } = useGameLogic(stepCards)
   const navigate = useNavigate()
   const currentStage = STEP_CONFIG[state.currentStep]
@@ -81,6 +84,14 @@ function GamePage() {
           time={time}
         /> : null
       }
+
+      {/* Match snackbar */}
+      {matchedCard && (
+        <MatchSnackbar
+          card={matchedCard}
+          onDone={clearMatchedCard}
+        />
+      )}
     </>
   )
 }
