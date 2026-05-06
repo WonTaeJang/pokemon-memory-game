@@ -10,7 +10,7 @@ interface Props {
 }
 
 function Card({ card, stage, onClick, disabled }: Props) {
-  const imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${card.pokemonId}.png`;
+  const imgUrl = card.imageUrl
   const isVisible = card.isFlipped || card.isMatched
   const [popAnim, setPopAnim] = useState(false)
 
@@ -23,6 +23,7 @@ function Card({ card, stage, onClick, disabled }: Props) {
     }
   }, [card.isMatched])
 
+  const frontCardSize = 80 + (10 * (stage.step - 1))
   const isActive = !disabled && !card.isMatched && !card.isFlipped
 
   return (
@@ -58,7 +59,7 @@ function Card({ card, stage, onClick, disabled }: Props) {
             src={imgUrl}
             alt={`pokemon-${card.pokemonId}`}
             style={{
-              width: '80%', height: '80%',
+              width: `${frontCardSize}%`, height: `${frontCardSize}%`,
               objectFit: 'contain',
               imageRendering: 'pixelated',
               filter: 'drop-shadow(1px 2px 4px rgba(0,0,0,0.25))',
@@ -68,7 +69,7 @@ function Card({ card, stage, onClick, disabled }: Props) {
           {card.isMatched && (
             <div style={{
               position: 'absolute', top: 4, right: 6,
-              color: '#FFD700', fontSize: 12, fontWeight: 'bold',
+              color: '#FFD700', fontSize: 24, fontWeight: 'bold',
               textShadow: '0 1px 3px rgba(0,0,0,0.5)',
             }}>✓</div>
           )}
