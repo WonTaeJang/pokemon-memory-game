@@ -1,3 +1,4 @@
+import './GamePage.css'
 import Board from "@components/board/Board"
 import FinalResultOverlay from "@components/overlay/FinalResultOverlay"
 import MatchSnackbar from "@components/snackbar/MatchSnackbar"
@@ -9,7 +10,11 @@ import { STEP_CONFIG } from '@constants/gameConfig'
 import { getBestScore, setBestScore } from '@/utils/storage'
 
 function GamePage() {
-  const { stepCards, isLoading } = usePokemon()
+  const { 
+    stepCards, 
+    handleResetCards,
+    isLoading 
+  } = usePokemon()
   const { 
     state, 
     handleCardClick, 
@@ -47,7 +52,8 @@ function GamePage() {
     return () => clearInterval(id)
   }, [state.status])
 
-  const onClickRetry = () => {
+  const onClickRetry = async () => {
+    await handleResetCards()
     handleReset()
     setTimer(0)
   }
@@ -56,7 +62,7 @@ function GamePage() {
     const storedBest = getBestScore()
     const bestScore = Math.max(storedBest, state.totalScore)
     return (
-      <div style={{ minHeight: '100dvh', background: 'linear-gradient(160deg, #1a0000 0%, #0d0d1a 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="result-screen">
         <FinalResultOverlay
           totalScore={state.totalScore}
           bestScore={bestScore}
