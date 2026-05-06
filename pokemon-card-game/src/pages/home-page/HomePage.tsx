@@ -89,6 +89,8 @@ function HomePage() {
       </button>
 
       <div style={homeStyles.footer}>4 STAGES · MEMORY CHALLENGE</div>
+
+      <div style={homeStyles.version}>v{__APP_VERSION__}</div>
     </div>
   )
 }
@@ -234,6 +236,15 @@ const homeStyles: Record<string, React.CSSProperties> = {
     color: 'rgba(255,255,255,0.25)',
     letterSpacing: 3,
     marginTop: 4,
+  },
+  version: {
+    position: 'fixed',
+    bottom: 8,
+    right: 12,
+    fontSize: 7,
+    color: 'rgba(255,255,255,0.2)',
+    fontFamily: "'Press Start 2P', monospace",
+    pointerEvents: 'none',
   },
 }
 
