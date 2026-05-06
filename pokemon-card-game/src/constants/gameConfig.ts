@@ -45,7 +45,7 @@ export const STEP_CONFIG: StepConfig[] = [
     rows: 6, 
     cols: 5, 
     pokemonCount: 15, 
-    maxFlips: 40,
+    maxFlips: 30,
     id: 4,
     label: "STAGE 4",
     ballType: "masterball",
