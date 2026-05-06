@@ -5,3 +5,11 @@
  * - .result-screen: 클리어/게임오버 결과 화면 스타일
  * - .restart-button: 재시작 버튼 스타일
  */
+
+.result-screen {
+  min-height: 100dvh;
+  background: linear-gradient(160deg, #1a0000 0%, #0d0d1a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
