@@ -42,12 +42,19 @@ src/
 └── main.tsx
 ```
 
+##
+https://wontaejang.github.io/pokemon-memory-game
+
 ## todo
 - css 파일로 분리하기 or tailwind 적용 
 - 로딩창 띄우기
 - 포켓몬 번호 불러와서 localstorage에 저장하기
+- 처음 뒤집고 두번쨰 뒤집기 전까지는 전구 비활성화 시키기 
+- 다시시작시 이미지 교체 및 셔플 되는지 확인하기
+- 이전 뒤집은 카드 기억하는 기능 넣을지 확인 필요
 
 ## done
 - 카드 뒤집은 갯수 만큼 점수 부여하기 
 - 다시 시작시 time 리셋 안되는 문제 
 - 카드 뒤집기 성공시 포켓몬 이름 노출
+- 이미지 확대 하기
