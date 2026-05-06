@@ -94,6 +94,7 @@ function GamePage() {
       {/* Match snackbar */}
       {matchedCard && (
         <MatchSnackbar
+          key={matchedCard.id}
           card={matchedCard}
           onDone={clearMatchedCard}
         />
