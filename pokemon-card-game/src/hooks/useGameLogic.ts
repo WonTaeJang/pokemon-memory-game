@@ -173,19 +173,18 @@ export function useGameLogic(stepCards: CardType[][]) {
         // snackbar
         setMatchedCard(first)
 
+        dispatch({ type: 'MATCH_SUCCESS' })
+
         if (willBeLastMatch) {
           if (state.currentStep >= TOTAL_STEPS - 1) {
             setTimeout(() => {
               dispatch({ type: 'GAME_CLEAR' })
             }, 1700)
           } else {
-            dispatch({ type: 'MATCH_SUCCESS' })
             setTimeout(() => {
               dispatch({ type: 'NEXT_STEP', cards: stepCards[state.currentStep + 1] })
             }, 1700)
           }
-        } else {
-          dispatch({ type: 'MATCH_SUCCESS' })
         }
       } else {
         dispatch({ type: 'SET_CHECKING', value: true })
