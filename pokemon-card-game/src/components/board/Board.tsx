@@ -44,6 +44,7 @@ function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, hand
         {/* header */}
         <GameInfo
           stage={stage}
+          state={state}
           flipsLeft={state.remainingFlips}
           timer={time}
           totalScore={state.totalScore}

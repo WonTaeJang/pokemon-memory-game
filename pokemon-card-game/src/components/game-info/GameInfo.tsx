@@ -1,7 +1,9 @@
-import type { StepConfig } from '@/types'
+import { useState } from 'react'
+import type { StepConfig, GameState } from '@/types'
 
 interface Props {
   stage: StepConfig
+  state: GameState
   flipsLeft: number
   timer: number
   totalScore: number
@@ -14,11 +16,22 @@ interface Props {
 }
 
 // ===== TOP BAR =====
-const GameInfo = ({ stage, flipsLeft, timer, totalScore, onHome, hintsLeft, onHint, hintActive, onSkipStage, isLastStage }: Props) => {
+const GameInfo = ({ stage, state, flipsLeft, timer, totalScore, onHome, hintsLeft, onHint, hintActive, onSkipStage, isLastStage }: Props) => {
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60)
     const sec = s % 60
     return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`
+  }
+
+  const [shaking, setShaking] = useState(false)
+
+  const onClickHint = () => {
+    if (state.flippedCards.length > 0) {
+      setShaking(true)
+      setTimeout(() => setShaking(false), 400)
+    } else {
+      onHint()
+    }
   }
 
   return (
@@ -75,8 +88,9 @@ const GameInfo = ({ stage, flipsLeft, timer, totalScore, onHome, hintsLeft, onHi
           opacity: hintsLeft <= 0 ? 0.35 : 1,
           background: hintActive ? 'rgba(255,215,0,0.25)' : 'rgba(255,255,255,0.08)',
           border: hintActive ? '1px solid #FFD700' : '1px solid rgba(255,255,255,0.2)',
+          animation: shaking ? 'shake 0.4s ease' : undefined,
         }}
-        onClick={onHint}
+        onClick={onClickHint}
         disabled={hintsLeft <= 0}
         title={`힌트 (남은 횟수: ${hintsLeft})`}
       >
