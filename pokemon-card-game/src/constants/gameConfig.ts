@@ -57,3 +57,4 @@ export const STEP_CONFIG: StepConfig[] = [
 
 export const TOTAL_STEPS = 4
 export const FLIP_DELAY_MS = 1000
+export const HINT_COUNT = 3

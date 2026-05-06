@@ -2,7 +2,7 @@ import type { CardType, GameState, StepConfig } from '@/types'
 import GameInfo from '../game-info/GameInfo'
 import Card from '../card/Card'
 import { useState } from 'react'
-import { STEP_CONFIG } from '@/constants/gameConfig'
+import { STEP_CONFIG, HINT_COUNT } from '@/constants/gameConfig'
 
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
 }
 
 function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, handleActiveHint, time }: Props) {
-  const [hintsLeft, setHintsLeft] = useState(3)
+  const [hintsLeft, setHintsLeft] = useState(HINT_COUNT)
   const [hintActive, setHintActive] = useState(false)
 
   const matchedCount = state.cards.filter(card => card.isMatched).length / 2
@@ -34,8 +34,7 @@ function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, hand
     setTimeout(() => {
       setHintActive(false)
       handleActiveHint(false, hintIds)
-
-    }, 1200)
+    }, 2000)
   }
 
   return (
