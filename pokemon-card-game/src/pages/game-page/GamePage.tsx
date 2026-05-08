@@ -80,6 +80,7 @@ function GamePage() {
       {
         state.status === 'playing' ?
         <Board 
+          key={currentStage.id}
           cards={state.cards}
           state={state}
           stage={currentStage}

@@ -1,7 +1,7 @@
 import type { CardType, GameState, StepConfig } from '@/types'
 import GameInfo from '../game-info/GameInfo'
 import Card from '../card/Card'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { STEP_CONFIG, HINT_COUNT } from '@/constants/gameConfig'
 
 
@@ -22,20 +22,28 @@ function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, hand
 
   const matchedCount = state.cards.filter(card => card.isMatched).length / 2
 
-  const handleHint = () => {
-    if (hintsLeft <= 0 || hintActive) return
-    setHintsLeft(h => h - 1);
-    setHintActive(true)
-
+  const handleHint = (onExpire?: () => void) => {
     const unmatchedCards = cards.filter(c => !c.isMatched)
     const hintIds = unmatchedCards.map(c => c.id)
     handleActiveHint(true, hintIds)
 
     setTimeout(() => {
-      setHintActive(false)
       handleActiveHint(false, hintIds)
+      onExpire?.()
     }, 2000)
   }
+
+  const onClickHint = () => {
+    if (hintsLeft <= 0 || hintActive) return
+    setHintsLeft(h => h - 1)
+    setHintActive(true)
+
+    handleHint(() => setHintActive(false))
+  }
+
+  useEffect(() => {
+    if (cards.length > 0) handleHint()
+  }, [])
 
   return (
     <div style={boardStyles.wrapper}>
@@ -50,7 +58,7 @@ function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, hand
           hintsLeft={hintsLeft}
           hintActive={hintActive}
           isLastStage={stage.id === STEP_CONFIG.length}
-          onHint={handleHint}
+          onHint={onClickHint}
           onSkipStage={handleSkipStage}
           onHome={onHome}
         />
