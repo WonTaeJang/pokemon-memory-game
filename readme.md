@@ -49,9 +49,8 @@ https://wontaejang.github.io/pokemon-memory-game
 - css 파일로 분리하기 or tailwind 적용 
 - 로딩창 띄우기
 - progress bar 컴포넌트 분리하기
-- 아이폰일때 animation이 정상동작하지 않는 이슈 
-- 다크모드 처리 
 - 가로 세로 화면 비율에 따라서 row col 교차하기 
+- 이로치 추가하기
 
 ## done
 - 카드 뒤집은 갯수 만큼 점수 부여하기 
@@ -65,3 +64,4 @@ https://wontaejang.github.io/pokemon-memory-game
 - 포켓몬 번호 불러와서 localstorage에 저장하기
 - 시작시 hint 
 - 카드 터치시 파란색 영역 (드래그) 안되게 수정하기
+- 아이폰일때 animation이 정상동작하지 않는 이슈 
