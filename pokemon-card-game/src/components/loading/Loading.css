@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(160deg, #0d0d1a 0%, #1a0d00 100%);
-  gap: 16px;
+  gap: 24px;
 }
 
 .loading-gif {
@@ -16,7 +16,7 @@
 
 .loading-text {
   font-family: 'Press Start 2P', monospace;
-  font-size: 12px;
+  font-size: 24px;
   color: #ffd700;
   animation: blink 1s step-start infinite;
 }
