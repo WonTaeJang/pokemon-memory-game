@@ -1,7 +1,6 @@
 export interface PokemonData {
   id: number
   name: string
-  imageUrl: string
 }
 
 export interface PokemonName {
@@ -13,9 +12,9 @@ export interface CardType {
   id: string
   name: string
   pokemonId: number
-  imageUrl: string
   isFlipped: boolean
   isMatched: boolean
+  isShiny: boolean
 }
 
 export interface StepConfig {

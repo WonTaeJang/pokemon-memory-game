@@ -1,5 +1,6 @@
 import type { CardType, StepConfig } from '@/types'
 import { useState, useEffect } from 'react'
+import { getImgUrl } from '@/utils/img'
 import PokeballBack from '../pokeball/PokeballBack'
 import './Card.css'
 
@@ -11,7 +12,7 @@ interface Props {
 }
 
 function Card({ card, stage, onClick, disabled }: Props) {
-  const imgUrl = card.imageUrl
+  const imgUrl = getImgUrl(card.pokemonId, card.isShiny)
   const isVisible = card.isFlipped || card.isMatched
   const [popAnim, setPopAnim] = useState(false)
 

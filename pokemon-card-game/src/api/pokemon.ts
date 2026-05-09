@@ -3,6 +3,7 @@ import type { PokemonData, PokemonName } from '@/types/index'
 const BASE_URL = 'https://pokeapi.co/api/v2'
 const POKEMON_MAX_ID = 1025 // 모든 포켓몬
 const IMG_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'
+const IMG_SHINY_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/'
 const CACHE_KEY = 'pokemon_cache'
 
 type PokemonCache = Record<number, PokemonData>
@@ -41,7 +42,6 @@ async function fetchPokemon(id: number, cache: PokemonCache): Promise<PokemonDat
   const pokemon: PokemonData = {
     id: data.id,
     name: data.names.find((el: PokemonName) => el.language.name === 'ko').name,
-    imageUrl: `${IMG_URL}${id}.png`
   }
 
   cache[id] = pokemon
