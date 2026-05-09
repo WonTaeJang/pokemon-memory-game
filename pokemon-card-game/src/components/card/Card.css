@@ -1,0 +1,39 @@
+.card-scene {
+  cursor: default;
+}
+
+.card-scene.active {
+  cursor: pointer;
+}
+
+.card-back-content {
+  width: 72%;
+  height: 72%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-matched-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 215, 0, 0.13);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.card-pokemon-img {
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+.card-matched-badge {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  color: #ffd700;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}

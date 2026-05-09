@@ -1,6 +1,7 @@
 import type { CardType, StepConfig } from '@/types'
 import { useState, useEffect } from 'react'
 import PokeballBack from '../pokeball/PokeballBack'
+import './Card.css'
 
 interface Props {
   card: CardType,
@@ -28,51 +29,33 @@ function Card({ card, stage, onClick, disabled }: Props) {
 
   return (
     <div
-      className={`card-scene${isActive ? ' active' : ''}`}
+      className={[
+        'card-scene', 
+        isActive ? 'active' : '', 
+        popAnim ? 'matched-pop' : ''
+      ].filter(Boolean).join(' ')}
       onClick={() => isActive && onClick(card.id)}
-      style={{ cursor: isActive ? 'pointer' : 'default' }}
     >
-      <div className={[
-        'card-inner',
-        isVisible ? 'flipped' : '',
-        popAnim ? 'matched-pop' : '',
-      ].filter(Boolean).join(' ')}>
+      <div className={`card-inner${isVisible ? ' flipped' : ''}`}>
 
         {/* BACK FACE */}
         <div className="card-face card-back">
-          <div style={{ width: '72%', height: '72%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="card-back-content">
             <PokeballBack type={stage.ballType} size={999} />
           </div>
         </div>
 
         {/* FRONT FACE */}
         <div className={`card-face card-front${card.isMatched ? ' matched' : ''}`}>
-          {card.isMatched && (
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'rgba(255,215,0,0.13)',
-              borderRadius: 8,
-              pointerEvents: 'none',
-            }} />
-          )}
+          {card.isMatched && <div className="card-matched-overlay" />}
           <img
             src={imgUrl}
             alt={`pokemon-${card.pokemonId}`}
-            style={{
-              width: `${frontCardSize}%`, height: `${frontCardSize}%`,
-              objectFit: 'contain',
-              imageRendering: 'pixelated',
-              filter: 'drop-shadow(1px 2px 4px rgba(0,0,0,0.25))',
-            }}
+            className="card-pokemon-img"
+            style={{ width: `${frontCardSize}%`, height: `${frontCardSize}%` }}
             draggable={false}
           />
-          {card.isMatched && (
-            <div style={{
-              position: 'absolute', top: 4, right: 6,
-              color: '#FFD700', fontSize: 24, fontWeight: 'bold',
-              textShadow: '0 1px 3px rgba(0,0,0,0.5)',
-            }}>✓</div>
-          )}
+          {card.isMatched && <div className="card-matched-badge">✓</div>}
         </div>
       </div>
     </div>
