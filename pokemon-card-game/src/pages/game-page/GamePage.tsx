@@ -2,7 +2,7 @@ import './GamePage.css'
 import Board from "@components/board/Board"
 import FinalResultOverlay from "@components/overlay/FinalResultOverlay"
 import MatchSnackbar from "@components/snackbar/MatchSnackbar"
-import Loading from '@/components/loading/loading'
+import Loading from '@components/loading/Loading'
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { usePokemon } from "@/hooks/usePokemon"
