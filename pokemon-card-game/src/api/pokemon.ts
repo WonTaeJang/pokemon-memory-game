@@ -2,8 +2,6 @@ import type { PokemonData, PokemonName } from '@/types/index'
 
 const BASE_URL = 'https://pokeapi.co/api/v2'
 const POKEMON_MAX_ID = 1025 // 모든 포켓몬
-const IMG_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'
-const IMG_SHINY_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/'
 const CACHE_KEY = 'pokemon_cache'
 
 type PokemonCache = Record<number, PokemonData>
