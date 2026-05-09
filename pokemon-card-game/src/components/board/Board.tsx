@@ -19,30 +19,33 @@ interface Props {
 function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, handleActiveHint, time }: Props) {
   const [hintsLeft, setHintsLeft] = useState(HINT_COUNT)
   const [hintActive, setHintActive] = useState(false)
-
   const matchedCount = state.cards.filter(card => card.isMatched).length / 2
 
-  const handleHint = (onExpire?: () => void) => {
+  const handleHint = () => {
     const unmatchedCards = cards.filter(c => !c.isMatched)
     const hintIds = unmatchedCards.map(c => c.id)
+    setHintActive(true)
     handleActiveHint(true, hintIds)
 
     setTimeout(() => {
       handleActiveHint(false, hintIds)
-      onExpire?.()
+      setHintActive(false)
     }, 2000)
   }
 
   const onClickHint = () => {
     if (hintsLeft <= 0 || hintActive) return
     setHintsLeft(h => h - 1)
-    setHintActive(true)
-
-    handleHint(() => setHintActive(false))
+    
+    handleHint()
   }
 
   useEffect(() => {
-    if (cards.length > 0) handleHint()
+    const initBoard = () => {
+      handleHint()
+    }
+
+    initBoard()
   }, [])
 
   return (
