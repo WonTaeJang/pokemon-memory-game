@@ -40,7 +40,7 @@ function GamePage() {
   const [time, setTimer] = useState(0)
 
   useEffect(() => {
-    if(!isLoading) {
+    if(!isLoading && import.meta.env.DEV) {
       console.log('state: ', state)
     }
     
