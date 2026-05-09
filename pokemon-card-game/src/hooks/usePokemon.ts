@@ -21,7 +21,10 @@ export function usePokemon() {
 
     try {
       setIsLoading(true)
-      const data = await fetchRandomPokemons(33)
+      const [data] = await Promise.all([
+        fetchRandomPokemons(33),
+        new Promise(resolve => setTimeout(resolve, 2000)),
+      ])
 
       const steps = STEP_COUNTS.map(count => {
         const slice = data.slice(cursor, cursor + count)
@@ -31,6 +34,8 @@ export function usePokemon() {
 
       const cards = steps.map(stepPokemons => shuffle(stepPokemons.flatMap(toCards)))
       setStepCards(cards)
+
+
     } catch {
       setError(new Error('포켓몬 데이터를 불러오지 못했습니다.'))
     } finally {
