@@ -2,6 +2,7 @@ import './GamePage.css'
 import Board from "@components/board/Board"
 import FinalResultOverlay from "@components/overlay/FinalResultOverlay"
 import MatchSnackbar from "@components/snackbar/MatchSnackbar"
+import Loading from '@/components/loading/loading'
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { usePokemon } from "@/hooks/usePokemon"
@@ -52,13 +53,16 @@ function GamePage() {
     return () => clearInterval(id)
   }, [state.status])
 
+  const [isRetry, setIsRetry] = useState(false)
   const onClickRetry = async () => {
+    setIsRetry(true)
     await handleResetCards()
     handleReset()
     setTimer(0)
+    setIsRetry(false)
   }
 
-  if (state.status === 'clear' || state.status === 'gameover') {
+  if ((state.status === 'clear' || state.status === 'gameover') && !isRetry) {
     const storedBest = getBestScore()
     const bestScore = Math.max(storedBest, state.totalScore)
     return (
@@ -78,7 +82,7 @@ function GamePage() {
   return (
     <>
       {
-        state.status === 'playing' ?
+        (state.status === 'playing') && !isRetry ?
         <Board 
           key={currentStage.id}
           cards={state.cards}
@@ -89,7 +93,7 @@ function GamePage() {
           onHome={() => navigate('/')}
           handleActiveHint={handleActiveHint}
           time={time}
-        /> : null
+        /> : <Loading />
       }
 
       {/* Match snackbar */}
