@@ -1,0 +1,160 @@
+.gi-bar {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.gi-home-btn {
+  background: rgba(229, 57, 53, 0.8);
+  border: 1px solid #CC0000;
+  border-radius: 6px;
+  color: #FFD700;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+
+.gi-home-btn-icon {
+  display: block;
+}
+
+.gi-stage-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 56px;
+}
+
+.gi-stage-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.gi-stage-ball {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.gi-center-block {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.gi-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.gi-stat-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.5px;
+}
+
+.gi-stat-value {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 13px;
+  color: #FFD700;
+  font-weight: 700;
+}
+
+.gi-stat-value--danger {
+  color: #FF5252;
+  animation: pulse 0.8s infinite;
+}
+
+.gi-stat-value--score {
+  color: #4CAF50;
+}
+
+.gi-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.gi-hint-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #FFD700;
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  min-width: 40px;
+}
+
+.gi-hint-btn--active {
+  background: rgba(255, 215, 0, 0.25);
+  border-color: #FFD700;
+}
+
+.gi-hint-btn--empty {
+  opacity: 0.35;
+}
+
+.gi-hint-btn--shaking {
+  animation: shake 0.4s ease;
+}
+
+.gi-hint-icon {
+  font-size: 16px;
+}
+
+.gi-hint-count {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: #FFD700;
+}
+
+.gi-skip-btn {
+  background: rgba(76, 175, 80, 0.2);
+  border: 1px solid rgba(76, 175, 80, 0.6);
+  border-radius: 6px;
+  color: #4CAF50;
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  flex-shrink: 0;
+  min-width: 40px;
+  transition: all 0.15s;
+}
+
+.gi-skip-icon {
+  font-size: 14px;
+}
+
+.gi-skip-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  color: #4CAF50;
+  letter-spacing: 0.5px;
+}
