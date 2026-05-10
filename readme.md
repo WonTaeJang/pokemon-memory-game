@@ -1,69 +1,42 @@
-# 포켓몬 카드 뒤집기 게임 
-- 포켓몬 API 를 활용한 img set 
-- claude design
+# 포켓몬 카드 뒤집기 게임
+
+포켓몬 카드를 뒤집어 같은 포켓몬 쌍을 찾는 메모리 게임입니다.  
+PokeAPI에서 랜덤 포켓몬 이미지를 불러오며, 이로치 포켓몬도 등장합니다.
+
 - react + typescript + vite
+- PokeAPI
 
-## 폴더 구조
+## 스크린샷
 
-```
-src/
-├── api/
-│   └── pokemon.ts          ← PokeAPI 호출 함수
-│
-├── components/
-│   ├── card/
-│   │   ├── Card.tsx
-│   │   └── Card.css
-│   ├── board/
-│   │   ├── Board.tsx
-│   │   └── Board.css
-│   └── game-info/
-│       └── GameInfo.tsx    ← 남은 횟수, 스텝 표시
-│
-├── pages/
-│   └── game-page/
-│       ├── GamePage.tsx
-│       └── GamePage.css
-│
-├── hooks/
-│   ├── useGameLogic.ts     ← 뒤집기, 매칭, 카운트 관리
-│   └── usePokemon.ts       ← API 호출 + 카드 데이터 생성
-│
-├── types/
-│   └── index.ts            ← CardType, GameState, StepConfig 등
-│
-├── utils/
-│   └── shuffle.ts          ← 카드 섞기
-│
-├── constants/
-│   └── gameConfig.ts       ← 스텝별 그리드/카운트 설정값
-│
-├── App.tsx
-└── main.tsx
-```
+<!-- 홈 화면 -->
+<!-- 게임 화면 -->
+<!-- 결과 화면 -->
 
-## game link
-https://wontaejang.github.io/pokemon-memory-game
+## 게임 방법
 
-## todo
-- css 파일로 분리하기 or tailwind 적용 
+1. 게임 시작 버튼을 눌러 STAGE 1부터 시작합니다
+2. 카드를 두 장씩 뒤집어 같은 포켓몬 쌍을 찾습니다
+3. 제한 횟수 안에 모든 쌍을 맞추면 다음 스테이지로 진행합니다
+4. 4개 스테이지를 모두 클리어하면 최종 결과를 확인할 수 있습니다
+
+> 💡 스테이지 시작 시 카드가 잠깐 공개됩니다. 위치를 외워두세요!
+
+## 스테이지
+
+| 스테이지 | 볼 | 그리드 | 제한 횟수 | 난이도 |
+|---------|-----|--------|----------|--------|
+| STAGE 1 | 몬스터볼 | 2 × 2 | 4회 | EASY |
+| STAGE 2 | 슈퍼볼 | 4 × 3 | 10회 | NORMAL |
+| STAGE 3 | 하이퍼볼 | 5 × 4 | 20회 | HARD |
+| STAGE 4 | 마스터볼 | 6 × 5 | 30회 | MASTER |
+
+## 플레이 링크
+
+[▶ 게임 시작하기](https://wontaejang.github.io/pokemon-memory-game)
+
+## todo 
 - progress bar 컴포넌트 분리하기
 - 가로 세로 화면 비율에 따라서 row col 교차하기 
-
-
-## done
-- 카드 뒤집은 갯수 만큼 점수 부여하기 
-- 다시 시작시 time 리셋 안되는 문제 
-- 카드 뒤집기 성공시 포켓몬 이름 노출
-- 이미지 확대 하기
-- 처음 뒤집고 두번쨰 뒤집기 전까지는 전구 비활성화 시키기 
-- 힌트 시간 늘리기
-- 다시시작시 이미지 교체 및 셔플 되는지 확인하기
-- 마지막 클리어시 highlight 안되는 현상 
-- 포켓몬 번호 불러와서 localstorage에 저장하기
-- 시작시 hint 
-- 카드 터치시 파란색 영역 (드래그) 안되게 수정하기
-- 아이폰일때 animation이 정상동작하지 않는 이슈 
-- 로딩창 띄우기
-- 이로치 추가하기
-- 이로치일때만 matched에서 빤짝이기 
+- stage 시작시 이미지 로딩이 끝나고 시작할 수 있게 하기 
+- 점수 자랑하기 만들기
+- 영문 버전 만들기
