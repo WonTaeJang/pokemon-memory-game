@@ -1,103 +1,103 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; background: #0d0d1a; overflow-x: hidden; }
-    #root { min-height: 100dvh; }
-    button { outline: none; }
+  html, body { height: 100%; background: #0d0d1a; overflow-x: hidden; }
+  #root { min-height: 100dvh; }
+  button { outline: none; }
 
-    @keyframes sparkle {
-      0%, 100% { transform: scale(1); opacity: 0.15; }
-      50% { transform: scale(1.8); opacity: 0.45; }
-    }
-    @keyframes floatLogo {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
-    }
-    @keyframes confettiFall {
-      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); color: #FF1744; }
-    }
-    @keyframes slideIn {
-      from { transform: translateY(-20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes hintGlow {
-      0%, 100% { box-shadow: 0 0 8px rgba(255,215,0,0.4); }
-      50% { box-shadow: 0 0 20px rgba(255,215,0,0.9); }
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%       { transform: translateX(-6px); }
-      40%       { transform: translateX(6px); }
-      60%       { transform: translateX(-4px); }
-      80%       { transform: translateX(4px); }
-    }
+  @keyframes sparkle {
+    0%, 100% { transform: scale(1); opacity: 0.15; }
+    50% { transform: scale(1.8); opacity: 0.45; }
+  }
+  @keyframes floatLogo {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); color: #FF1744; }
+  }
+  @keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes hintGlow {
+    0%, 100% { box-shadow: 0 0 8px rgba(255,215,0,0.4); }
+    50% { box-shadow: 0 0 20px rgba(255,215,0,0.9); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+  }
 
-    /* ===== 3D CARD FLIP ===== */
-    .card-scene {
-      perspective: 700px;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .card-inner {
-      width: 100%; height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.32s cubic-bezier(0.4, 0.0, 0.2, 1);
-      will-change: transform;
-    }
-    .card-inner.flipped {
-      transform: rotateY(180deg);
-    }
-    .card-face {
-      position: absolute;
-      inset: 0;
-      border-radius: 10px;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .card-back {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      border: 2px solid rgba(255,255,255,0.15);
-      transform: rotateY(0deg);
-    }
-    .card-front {
-      background: linear-gradient(135deg, #fff8f0 0%, #fff3e0 100%);
-      border: 2px solid #fff;
-      transform: rotateY(180deg);
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .card-front.matched {
-      border-color: #FFD700;
-      box-shadow: 0 0 14px rgba(255,215,0,0.8), inset 0 0 8px rgba(255,215,0,0.2);
-    }
-    /* hover lift on unflipped, unmatched cards */
-    .card-scene.active:hover .card-inner {
-      transform: rotateY(0deg) translateY(-3px) scale(1.04);
-    }
-    .card-scene.active:hover .card-inner.flipped {
-      transform: rotateY(180deg) translateY(-3px) scale(1.04);
-    }
-    /* match pop animation */
-    @keyframes matchPop {
-      0%   { transform: scale(1); }
-      40%  { transform: scale(1.12); }
-      70%  { transform: scale(0.96); }
-      100% { transform: scale(1); }
-    }
-    .card-scene.matched-pop {
-      animation: matchPop 0.4s ease forwards;
-    }
+  /* ===== 3D CARD FLIP ===== */
+  .card-scene {
+    perspective: 700px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .card-inner {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.32s cubic-bezier(0.4, 0.0, 0.2, 1);
+    will-change: transform;
+  }
+  .card-inner.flipped {
+    transform: rotateY(180deg);
+  }
+  .card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-back {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 2px solid rgba(255,255,255,0.15);
+    transform: rotateY(0deg);
+  }
+  .card-front {
+    background: linear-gradient(135deg, #fff8f0 0%, #fff3e0 100%);
+    border: 2px solid #fff;
+    transform: rotateY(180deg);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .card-front.matched {
+    border-color: #FFD700;
+    box-shadow: 0 0 14px rgba(255,215,0,0.8), inset 0 0 8px rgba(255,215,0,0.2);
+  }
+  /* hover lift on unflipped, unmatched cards */
+  .card-scene.active:hover .card-inner {
+    transform: rotateY(0deg) translateY(-3px) scale(1.04);
+  }
+  .card-scene.active:hover .card-inner.flipped {
+    transform: rotateY(180deg) translateY(-3px) scale(1.04);
+  }
+  /* match pop animation */
+  @keyframes matchPop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.12); }
+    70%  { transform: scale(0.96); }
+    100% { transform: scale(1); }
+  }
+  .card-scene.matched-pop {
+    animation: matchPop 0.4s ease forwards;
+  }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #0d0d1a; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #0d0d1a; }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
