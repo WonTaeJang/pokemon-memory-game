@@ -1,10 +1,10 @@
 # 포켓몬 카드 뒤집기 게임
 
 포켓몬 카드를 뒤집어 같은 포켓몬 쌍을 찾는 메모리 게임입니다.  
-PokeAPI에서 랜덤 포켓몬 이미지를 불러오며, 이로치 포켓몬도 등장합니다.
+**1025종의 모든 포켓몬**이 랜덤으로 등장하며, 희귀한 이로치 포켓몬도 만날 수 있습니다.
 
-- react + typescript + vite
-- PokeAPI
+- 1025종 전 포켓몬 지원
+- 이로치 포켓몬 랜덤 등장
 
 ## 스크린샷
 
@@ -33,6 +33,11 @@ PokeAPI에서 랜덤 포켓몬 이미지를 불러오며, 이로치 포켓몬도
 ## 플레이 링크
 
 [▶ 게임 시작하기](https://wontaejang.github.io/pokemon-memory-game)
+
+## 개발 스택
+
+- React + TypeScript + Vite
+- PokeAPI
 
 ## todo 
 - progress bar 컴포넌트 분리하기
