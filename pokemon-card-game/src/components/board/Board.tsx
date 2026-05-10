@@ -1,7 +1,7 @@
 import type { CardType, GameState, StepConfig } from '@/types'
 import GameInfo from '../game-info/GameInfo'
 import Card from '../card/Card'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { STEP_CONFIG, HINT_COUNT } from '@/constants/gameConfig'
 import './Board.css'
 
@@ -20,7 +20,23 @@ interface Props {
 function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, handleActiveHint, time }: Props) {
   const [hintsLeft, setHintsLeft] = useState(HINT_COUNT)
   const [hintActive, setHintActive] = useState(false)
+  const [isLandscape, setIsLandscape] = useState(false)
+  const boardAreaRef = useRef<HTMLDivElement>(null)
   const matchedCount = state.cards.filter(card => card.isMatched).length / 2
+
+  const cols = isLandscape ? stage.rows : stage.cols
+  const rows = isLandscape ? stage.cols : stage.rows
+
+  useEffect(() => {
+    const el = boardAreaRef.current
+    if (!el) return
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect
+      setIsLandscape(width > height)
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   const handleHint = () => {
     const unmatchedCards = cards.filter(c => !c.isMatched)
@@ -68,12 +84,12 @@ function Board({ cards, state, stage, onClickCard, onHome, handleSkipStage, hand
         />
 
         {/* main */}
-        <div className="board-area">
+        <div className="board-area" ref={boardAreaRef}>
           <div
             className="board-grid"
             style={{
-              gridTemplateColumns: `repeat(${stage.cols}, 1fr)`,
-              gridTemplateRows: `repeat(${stage.rows}, 1fr)`,
+              gridTemplateColumns: `repeat(${cols}, 1fr)`,
+              gridTemplateRows: `repeat(${rows}, 1fr)`,
             }}
           >
             {cards.map(card => (
