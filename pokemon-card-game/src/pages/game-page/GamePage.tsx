@@ -28,16 +28,30 @@ function GamePage() {
   const navigate = useNavigate()
   const currentStage = STEP_CONFIG[state.currentStep]
 
-  useEffect(() => {
-    if (state.status === 'clear' || state.status === 'gameover') {
-      if (state.totalScore > getBestScore()) {
-        setBestScore(state.totalScore)
-      }
-    }
-  }, [state.status, state.totalScore])
-
   // timer
   const [time, setTimer] = useState(0)
+
+  useEffect(() => {
+    if (state.status === 'clear') {
+      if (state.totalScore > getBestScore()) setBestScore(state.totalScore)
+      if (!import.meta.env.DEV) {
+        gtag('event', 'game_clear', {
+          total_score: state.totalScore,
+          time_seconds: time,
+        })
+      }
+    }
+    if (state.status === 'gameover') {
+      if (state.totalScore > getBestScore()) setBestScore(state.totalScore)
+      if (!import.meta.env.DEV) {
+        gtag('event', 'game_over', {
+          total_score: state.totalScore,
+          stage_reached: state.currentStep + 1,
+          time_seconds: time,
+        })
+      }
+    }
+  }, [state.status])
 
   useEffect(() => {
     if(!isLoading && import.meta.env.DEV) {
